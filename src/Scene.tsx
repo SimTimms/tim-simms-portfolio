@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
 import "./app.css";
 import * as THREE from "three";
-import loadTextures from "./textures";
-import { TexturesType } from "./types";
-import { Building, Cube, Floor } from "./models";
+import loadTextures from "./utils/loadTextures";
+import loadModels from "./utils/loadModels";
+import { TexturesType, ModelsType } from "./types";
+import { Building, Cube, Floor, Car, CityBlock, Shop } from "./models";
 import { useThree } from "@react-three/fiber";
+import { Stats, OrbitControls } from "@react-three/drei";
 
 function Scene() {
+  const { camera } = useThree();
+  // Controls
+
   const textures: TexturesType = loadTextures();
+  const models: ModelsType = loadModels();
   const brandColor = "#ff00ee";
   const raycaster = new THREE.Raycaster();
   const [mouse, setMouse] = useState<THREE.Vector2>(new THREE.Vector2());
-  const { camera } = useThree();
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -33,6 +38,8 @@ function Scene() {
 
   return (
     <>
+      <OrbitControls />
+      <Stats />
       <Cube
         textures={{
           hexNormal: textures.hexNormal,
@@ -43,28 +50,36 @@ function Scene() {
         mouse={mouse}
         camera={camera}
       />
+      <Car primitiveModel={models.lightBeam} carAlpha={textures.carAlpha} />
       <Floor
         textures={{
           roadNormal: textures.roadNormal,
           roadARM: textures.roadARM,
         }}
       />
-      <group position={[3, 4, 0]}>
-        <Building
-          textures={{
-            wallNormal: textures.wallNormal,
-            wallARM: textures.wallARM,
-          }}
-        />
-      </group>
-      <group position={[3, 4, -5]}>
-        <Building
-          textures={{
-            wallNormal: textures.wallNormal,
-            wallARM: textures.wallARM,
-          }}
-        />
-      </group>
+      <CityBlock
+        textures={{
+          roadNormal: textures.roadNormal,
+          roadARM: textures.roadARM,
+        }}
+      />
+      <Shop
+        textures={{
+          normal: textures.shopNormal,
+          arm: textures.wallARM,
+          diff: textures.officeDiff,
+          emissive: textures.officeEmissive,
+        }}
+      />
+      <Building
+        textures={{
+          wallNormal: textures.wallNormal,
+          wallARM: textures.wallARM,
+          officeDiff: textures.officeDiff,
+          officeEmissive: textures.officeEmissive,
+        }}
+        primitiveModel={models.building}
+      />
     </>
   );
 }

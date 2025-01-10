@@ -29,14 +29,14 @@ function App() {
 
   return (
     <>
-      <Canvas className="canvas" shadows>
+      <Canvas className="canvas" camera={{ position: [3, 3, 3] }} shadows>
         <color attach="background" args={["#29353D"]} />
-        <ambientLight intensity={1} />
+        <ambientLight intensity={1.2} />
         <directionalLight
           color="#fff"
           position={[-3, 4, 5]}
           castShadow
-          intensity={4}
+          intensity={1}
         />
         <Scene />
         <OrbitControls />

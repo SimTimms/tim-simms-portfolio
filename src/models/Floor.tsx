@@ -13,8 +13,8 @@ function Floor({ textures }: FloorProps) {
     <mesh
       receiveShadow
       rotation={[-Math.PI / 2, 0, 0]}
-      scale={[20, 20, 1]}
-      position={[0, -1, 0]}
+      scale={[50, 50, 1]}
+      position={[0, 0, 0]}
     >
       <planeGeometry />
       <meshStandardMaterial

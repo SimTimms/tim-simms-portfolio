@@ -1,8 +1,6 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
-import { useHelper } from "@react-three/drei";
-import { SpotLightHelper } from "three";
 
 interface CubeProps {
   textures: {
@@ -49,7 +47,11 @@ function Cube({ textures, brandColor, raycaster, mouse, camera }: CubeProps) {
   });
 
   return (
-    <group>
+    <group
+      ref={meshRef}
+      position={[0, 0.8, 0]}
+      rotation={[0, Math.PI, Math.PI * 0.025]}
+    >
       <spotLight
         color={brandColor}
         position={[0, 1.1, 0]}
@@ -58,57 +60,55 @@ function Cube({ textures, brandColor, raycaster, mouse, camera }: CubeProps) {
         penumbra={1}
         ref={spotlightRefColor}
       />
-      <group ref={meshRef} position={[0, 0.8, 0]}>
-        <mesh castShadow>
-          <boxGeometry />
-          <meshStandardMaterial color={"#ff5c00"} ref={meshRefColor} />
-        </mesh>
-        <mesh scale={[0.9, 1.1, 0.9]} castShadow>
-          <boxGeometry />
-          <meshStandardMaterial color={"#29353D"} normalMap={hexNormal} />
-        </mesh>
-        <mesh scale={[0.9, 0.9, 1.1]} castShadow>
-          <boxGeometry />
-          <meshStandardMaterial
-            attach="material-0"
-            color={"#29353D"}
-            normalMap={hexNormal}
-          />
-          <meshStandardMaterial
-            attach="material-1"
-            color={"#29353D"}
-            normalMap={hexNormal}
-          />
-          <meshStandardMaterial
-            attach="material-2"
-            color={"#29353D"}
-            normalMap={hexNormal}
-          />
-          <meshStandardMaterial
-            attach="material-3"
-            color={"#29353D"}
-            normalMap={hexNormal}
-          />
-          <meshStandardMaterial
-            attach="material-4"
-            color={"#29353D"}
-            normalMap={hexNormal}
-          />
-          <meshStandardMaterial
-            attach="material-5"
-            color={"#29353D"}
-            normalMap={hexNormal}
-            emissiveMap={timSimmsEmissive}
-            emissiveIntensity={0}
-            emissive={new THREE.Color(brandColor)}
-            ref={emissiveRef}
-          />
-        </mesh>
-        <mesh scale={[1.1, 0.9, 0.9]} castShadow>
-          <boxGeometry />
-          <meshStandardMaterial color={"#29353D"} normalMap={hexNormal} />
-        </mesh>
-      </group>
+      <mesh castShadow>
+        <boxGeometry />
+        <meshStandardMaterial color={"#ff5c00"} ref={meshRefColor} />
+      </mesh>
+      <mesh scale={[0.9, 1.1, 0.9]} castShadow>
+        <boxGeometry />
+        <meshStandardMaterial color={"#29353D"} normalMap={hexNormal} />
+      </mesh>
+      <mesh scale={[0.9, 0.9, 1.1]} castShadow>
+        <boxGeometry />
+        <meshStandardMaterial
+          attach="material-0"
+          color={"#29353D"}
+          normalMap={hexNormal}
+        />
+        <meshStandardMaterial
+          attach="material-1"
+          color={"#29353D"}
+          normalMap={hexNormal}
+        />
+        <meshStandardMaterial
+          attach="material-2"
+          color={"#29353D"}
+          normalMap={hexNormal}
+        />
+        <meshStandardMaterial
+          attach="material-3"
+          color={"#29353D"}
+          normalMap={hexNormal}
+        />
+        <meshStandardMaterial
+          attach="material-4"
+          color={"#29353D"}
+          normalMap={hexNormal}
+        />
+        <meshStandardMaterial
+          attach="material-5"
+          color={"#29353D"}
+          normalMap={hexNormal}
+          emissiveMap={timSimmsEmissive}
+          emissiveIntensity={0}
+          emissive={new THREE.Color(brandColor)}
+          ref={emissiveRef}
+        />
+      </mesh>
+      <mesh scale={[1.1, 0.9, 0.9]} castShadow>
+        <boxGeometry />
+        <meshStandardMaterial color={"#29353D"} normalMap={hexNormal} />
+      </mesh>
     </group>
   );
 }
